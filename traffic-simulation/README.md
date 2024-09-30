@@ -26,10 +26,28 @@ Intersection with designated legs:
 
 A lane allows for a vehicle to cross the intersection in a certain manner. You may experience the following lane types in this use case:
 
-- **Main**: Allows for traffic to go straight, left, or right at the lane
-- **Straight**: Allows for trafic to go straight at the lane
+- **Main**: Allows for traffic to go straight at the lane. If there are no designated turning lanes, also allows for turning.
 - **RightTurn**: Allows for traffic to turn right at the lane
 - **LeftTurn**: Allows for traffic turn turn left at the lane
+
+In the models that you will recieve, no intersection can have more than five legs.
+
+#### Examples
+
+*Lanes for Leg A2*
+
+- Left: Allows for left turns only
+- Left: Allows for left turns only
+- Main: Allows for straight and right-turning traffic
+
+Total number of lanes for leg A2: 3
+
+*Lanes for Leg A1*
+
+- Main: Allows for straight and left-turning traffic
+- Right: Allows for right turns only
+
+Total number of lanes for leg A1: 2
 
 ### Vehicles
 We observe the vehicles as they approach the intersection. You will receive a list of all approaching vehicles that are within 100 meters of the intersection with the following attributes:
@@ -44,7 +62,7 @@ We do not care about the vehicles leaving the intersection. Thus, if a vehicle c
 
 The observable states of the traffic lights are:
 
-| Red   | Red/yellow    | Yellow | Green    |
+| Red   | Redamber      | Amber | Green    |
 |-------|---------------|--------|----------|
 | 🔴    | 🔴            | ⚫     | ⚫       |
 | ⚫    | 🟡            | 🟡     |⚫        |
@@ -54,20 +72,61 @@ We impose the following restrictions on the signals:
 
 1. The signal cannot change directly from red to green and vice versa. The transitions are:
 
-    a) Red -> Red/yellow -> Green
+    a) Red -> Redamber -> Green
 
-    b) Green -> Yellow -> Red
+    b) Green -> Amber -> Red
 2. Each signal state must be activated for at least:
 
-    a) Red/yellow: 2 seconds
-    b) Yellow: 4 seconds
+    a) Redamber: 2 seconds
+    b) Amber: 4 seconds
     c) Green: 6 seconds
 
-3. Our simulation controller will make sure that these restrictions are enforced. Thus, if you ask to switch the signal from red to green, we will make sure that the signal goes through the red/yellow phase for two seconds before switching to green.
+3. Our simulation controller will make sure that these restrictions are enforced. Thus, if you ask to switch the signal from red to green, we will make sure that the signal goes through the redamber phase for two seconds before switching to green.
 
 4. According to 3), it is only necessary for your model to ask for either red light or green light.
 
-**Allowed green light combinations** It is not possible (and probably not desirable, either!) to set the state to green for all of the traffic lights. In the intersection above, we would not want to turn on the green lights for both leg A1 and B1 - the cars would potentially collide, and the cars behind would form a looong queue (hello exponential penalty!). 
+#### Signal groups
+The traffic lights are controlled via signal groups. You receive a list of all the signal groups of the intersection (*signal_groups* in the DTO) and a list of signal groups per leg (*legs* in the DTO). 
+
+The signal groups are named according to the following conventions:
+
+- *LegName*: Controls the main lanes and the right turning lanes
+- *LegNameRightTurn* Controls the right turning lanes
+- *LegNameLeftTurn* Controls the left turning lanes
+
+#### Examples
+
+*Leg A2*: 
+
+- Lanes: 
+  - Left
+  - Left
+  - Main
+
+- Signal groups: 
+
+  - A2: Controls the main lane
+  - A2LeftTurn: Controls the left lanes
+
+
+*Leg A1*
+
+- Lanes
+  - Main
+  - Right
+- Signal groups
+  - A1: Controls the main lane and right-turning lane
+  - A1RightTurn: Controls the main lane
+
+In the example for leg A1, if you set the signal group A1 to green, the signals for both lanes are switched to green. 
+
+There might be cases where only allowing for right-turning traffic is feasible, for instance in combinations with other left-turning or right-turning groups.
+
+
+**Allowed green light combinations** It *is* possible (but probably not desirable) to set the state to green for all of the signal groups. In the intersection above, we would not want to turn on the green lights for both leg A1 and B1 - the cars would potentially collide, and the cars behind would form a looong queue (hello exponential penalty!). 
+Look in the DTO for *allowed_green_signal_combinations* - this gives you guidance on which green lights go together.
+
+
 
 
 ### Scoring
@@ -89,7 +148,7 @@ We impose a penalty for every car that has waited more than 90 seconds in total.
 The final score that you see in the leaderboard is normalized in the interval between 0 to 1 by:
 
 $$
-\text{final\_score} = \frac{1}{\text{score}}
+\text{final score} = \frac{1}{\text{score}}
 $$
 
 ## Interaction
