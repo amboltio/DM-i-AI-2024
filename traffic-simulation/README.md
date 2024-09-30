@@ -16,45 +16,47 @@ Each evaluation and validation runs in real time for ten minutes. The observable
 Thus, your API service needs to provide a response within 1 second but there is no reason to chase single-digit millisecond response times; we only update the state of the traffic lights every second.
 
 ### Intersection legs
-Each intersection has tree to four legs where vehiches approach and leave the intersection. 
+Each intersection has 3 to 4 legs where vehicles approach and leave the intersection. 
 Each leg may have one or more lanes. Each of these lanes is controlled by a traffic light - and it is up to you(r algorithm) to control the traffic light.
 
-Intersection with designated legs:
+Intersection with designated legs (Figure 2):
 <p align="center">
   <img src="../images/intersection-with-legs.png" width=650>
 </p>
 
 A lane allows for a vehicle to cross the intersection in a certain manner. You may experience the following lane types in this use case:
+- **Right**: Allows for traffic to only turn right at the lane.
+- **Left**: Allows for traffic to only turn left at the lane.
+- **Main**: Allows for traffic to go in any desired direction, which isn't designated in other lanes in said leg or don't have a turn-lane before the intersection.
 
-- **Main**: Allows for traffic to go straight at the lane. If there are no designated turning lanes, also allows for turning.
-- **RightTurn**: Allows for traffic to turn right at the lane
-- **LeftTurn**: Allows for traffic turn turn left at the lane
+In the models that you will receive, no intersection can have more than five legs.
 
-In the models that you will recieve, no intersection can have more than five legs.
+#### Examples as seen in Figure 2
 
-#### Examples
+**Lanes for Leg B2**
+- **3 x Left**: Allows for left turns only
+- **2 x Main**: Allows for straight traffic only (*Left-turn is designated in another lane, and right-turn lane occurs before the intersection*)
 
-*Lanes for Leg A2*
+Total number of lanes for leg B2: 5
 
-- Left: Allows for left turns only
-- Left: Allows for left turns only
-- Main: Allows for straight and right-turning traffic
+**Lanes for Leg A1**
+- **1 x Left**: Allows for left turns only
+- **2 x Main**: Allows for straight traffic only (*Left-turn is designated in another lane, and right-turn lane occurs before the intersection, which isn't showed on the image*)
 
-Total number of lanes for leg A2: 3
+Total number of lanes for leg A1: 3
 
-*Lanes for Leg A1*
+**Lanes for Leg X3 (not in Figure 2)**
+- **1 x Right**: Allows for right turns only
+- **1 x Main**: Allows for traffic straight and left (*Right-turn is designated in another lane, and left-turn isn't designated in this leg*)
 
-- Main: Allows for straight and left-turning traffic
-- Right: Allows for right turns only
-
-Total number of lanes for leg A1: 2
+Total number of lanes for leg X3: 2
 
 ### Vehicles
 We observe the vehicles as they approach the intersection. You will receive a list of all approaching vehicles that are within 100 meters of the intersection with the following attributes:
 
 - Distance_to_stop (m) (Distance to the traffic light)
 - Speed (m/s)
-- Leg (Name of the intersection leg that the vehicle is travelling on)
+- Leg (Name of the intersection leg that the vehicle is traveling on)
 
 We do not care about the vehicles leaving the intersection. Thus, if a vehicle crosses the traffic light, it disappears. 
 
@@ -89,41 +91,34 @@ We impose the following restrictions on the signals:
 The traffic lights are controlled via signal groups. You receive a list of all the signal groups of the intersection (*signal_groups* in the DTO) and a list of signal groups per leg (*legs* in the DTO). 
 
 The signal groups are named according to the following conventions:
+- **LegNameRightTurn**: Controls the right turning lanes
+- **LegNameLeftTurn**: Controls the left turning lanes
+- **LegName**: Controls the main lanes
 
-- *LegName*: Controls the main lanes and the right turning lanes
-- *LegNameRightTurn* Controls the right turning lanes
-- *LegNameLeftTurn* Controls the left turning lanes
+#### Examples as seen in Figure 2
+**Leg B2**
+- Lanes:
+  - 3 x Left lanes
+  - 2 x Main lanes
+- Signal groups:
+  - **A1LeftTurn**: Controls all the left-turning lanes
+  - **A1**: Controls both of the straight lanes
 
-#### Examples
-
-*Leg A2*: 
-
+**Leg A1**
 - Lanes: 
-  - Left
-  - Left
-  - Main
+  - 1 x Left lanes
+  - 2 x Main lanes
+- Signal groups:
+  - **A2LeftTurn**: Controls the left lane
+  - **A2**: Controls both of the main lanes
 
-- Signal groups: 
-
-  - A2: Controls the main lane
-  - A2LeftTurn: Controls the left lanes
-
-
-*Leg A1*
-
-- Lanes
-  - Main
-  - Right
-- Signal groups
-  - A1: Controls the main lane and right-turning lane
-  - A1RightTurn: Controls the main lane
-
-In the example for leg A1, if you set the signal group A1 to green, the signals for both lanes are switched to green. 
+In the example for leg A1, if you set the signal group A1 to green, the signals for both lanes are switched to green.
 
 There might be cases where only allowing for right-turning traffic is feasible, for instance in combinations with other left-turning or right-turning groups.
 
 
-**Allowed green light combinations** It *is* possible (but probably not desirable) to set the state to green for all of the signal groups. In the intersection above, we would not want to turn on the green lights for both leg A1 and B1 - the cars would potentially collide, and the cars behind would form a looong queue (hello exponential penalty!). 
+#### Allowed green light combinations
+It *is* possible (but probably not desirable) to set the state to green for all of the signal groups. In the intersection above, we would not want to turn on the green lights for both leg A1 and B1 - the cars would potentially collide, and the cars behind would form a looong queue (hello exponential penalty!). 
 Look in the DTO for *allowed_green_signal_combinations* - this gives you guidance on which green lights go together.
 
 
