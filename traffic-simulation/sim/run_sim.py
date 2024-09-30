@@ -48,6 +48,11 @@ def run_game():
         signal_logic_errors = None
         prediction = {}
         prediction["signals"] = []
+
+        if state.simulation_ticks % 30 == 0:
+            prediction["signals"].append({"name": "A1", "state": "green"})
+        elif state.simulation_ticks % 30 == 15:
+            prediction["signals"].append({"name": "A1", "state": "red"})
         
         # Update the desired phase of the traffic lights
         next_signals = {}
