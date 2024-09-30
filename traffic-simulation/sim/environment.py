@@ -268,9 +268,15 @@ class TrafficSimulationEnvHandler():
                     
     def set_next_signals(self, next_groups):
 
-        errors = self._validate_next_signals(next_groups)
+        errors = self._validate_next_signals_tiny(next_groups)
         
         return errors
+    
+    def _validate_next_signals_tiny(self, next_groups):
+        for group, color in next_groups.items():
+
+            command_color = color.lower()
+            self.next_groups[group] = command_color
 
     def _update_group_states(self, next_groups):
 
@@ -291,7 +297,7 @@ class TrafficSimulationEnvHandler():
                 else:
                     self.group_states[group] = ('amber', time+1)
             elif color == 'red' and current_color == 'green':
-                if time == self.min_green_time:
+                if time >= self.min_green_time:
                     self.group_states[group] = ('amber', 1)
                 else:
                     self.group_states[group] = ('green', time+1)
