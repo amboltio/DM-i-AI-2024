@@ -27,27 +27,31 @@ Intersection with designated legs (Figure 2):
 A lane allows for a vehicle to cross the intersection in a certain manner. You may experience the following lane types in this use case:
 - **Right**: Allows for traffic to only turn right at the lane.
 - **Left**: Allows for traffic to only turn left at the lane.
-- **Main**: Allows for traffic to go in any desired direction, which isn't designated in other lanes in said leg or don't have a turn-lane before the intersection.
+- **Main**: Allows for traffic to go straight, and potentially also turn left or right, if these turns aren’t assigned to other lanes on that leg.
+
+(*Note: Not all directions are always available.*)
 
 In the models that you will receive, no intersection can have more than five legs.
 
-#### Examples as seen in Figure 2
+#### Examples (refer to Figure 2)
 
 **Lanes for Leg B2**
 - **3 x Left**: Allows for left turns only
-- **2 x Main**: Allows for straight traffic only (*Left-turn is designated in another lane, and right-turn lane occurs before the intersection*)
+- **2 x Main**: Allows for straight traffic only
+(*Right-turn lane appears before the intersection.*)
 
 Total number of lanes for leg B2: 5
 
 **Lanes for Leg A1**
 - **1 x Left**: Allows for left turns only
-- **2 x Main**: Allows for straight traffic only (*Left-turn is designated in another lane, and right-turn lane occurs before the intersection, which isn't showed on the image*)
+- **2 x Main**: Allows for straight traffic only
+(*Right-turn lane appears before the intersection, which is not shown in the image.*)
 
 Total number of lanes for leg A1: 3
 
 **Lanes for Leg X3 (not in Figure 2)**
 - **1 x Right**: Allows for right turns only
-- **1 x Main**: Allows for traffic straight and left (*Right-turn is designated in another lane, and left-turn isn't designated in this leg*)
+- **1 x Main**: Allows for traffic straight and left
 
 Total number of lanes for leg X3: 2
 
