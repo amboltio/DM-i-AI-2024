@@ -1,0 +1,6 @@
+sumolib
+traci
+uvicorn
+fastapi
+loguru
+gunicorn

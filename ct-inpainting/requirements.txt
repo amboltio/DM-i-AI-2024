@@ -1,0 +1,8 @@
+uvicorn
+fastapi
+pydantic
+pydantic-settings
+opencv-python
+numpy
+matplotlib
+loguru

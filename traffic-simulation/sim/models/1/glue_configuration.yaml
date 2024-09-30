@@ -1,0 +1,169 @@
+intersections:
+  - x_offset: 295
+    y_offset: 448
+    box_system_host: '172.17.0.1'
+    legs:
+      - name: A1
+        lanes: [Left, Main, Main]
+        groups: [A1, A1LeftTurn]
+        radar: R3
+        segments: ["31552319#1"]
+      - name: A2
+        lanes: [Left, Main, Main]
+        groups: [A2, A2LeftTurn]
+        radar: R1
+        segments: ["661830501", "661949705#2", "661949705#1"]
+      - name: B1
+        lanes: [Left, Main, Main]
+        groups: [B1, B1LeftTurn]
+        segments: ["661806767", "661806765", "31552288"]
+        radar: R2
+      - name: B2
+        lanes: [Left, Left, Left, Main, Main]
+        groups: [B2, B2LeftTurn]
+        segments: ["661835697", "661830503#1-AddedOffRampEdge"]
+        radar: R4
+    radars:
+      # R1 Cafe
+      - port: 55556
+        edges: ["661830501", "661949705#2", "661949705#1"]
+        message_frequency: 20
+        radar_range: 200
+        name: R1
+      # R2 Restaurant
+      - port: 55557
+        edges: ["661806767", "661806765", "31552288"]
+        message_frequency: 20
+        radar_range: 200
+        name: R2
+      # R3 Hotel
+      - port: 55558
+        edges: ["31552319#1"]
+        message_frequency: 20
+        radar_range: 200
+        name: R3
+        ats_name: "R3 Hotel"
+      # R4 Factory
+      - port: 55559
+        edges: ["661835697", "661830503#1-AddedOffRampEdge"]
+        message_frequency: 20
+        radar_range: 200
+    connections:
+      #Factory lane #1
+      - index: 0
+        groups: [B2]
+        priority: true
+      #Factory lane #2
+      - index: 0
+        groups: [B2]
+        priority: true
+      #Factory_left #1
+      - index: 1
+        groups: [B2LeftTurn]  
+        priority: true
+      #Factory_left #2
+      - index: 1
+        groups: [B2LeftTurn]  
+        priority: true
+      #Factory_left #3
+      - index: 1
+        groups: [B2LeftTurn]  
+        priority: true
+      #Factory_left #4
+      - index: 1
+        groups: [B2LeftTurn]  
+        priority: true
+      #Factory_left #7
+      - index: 1
+        groups: [B2LeftTurn]  
+        priority: true
+      #Factory_left #8
+      - index: 1
+        groups: [B2LeftTurn, A2]
+        priority: true
+      #Main_road_Cafe #1
+      - index: 3
+        groups: [A2]  
+        priority: true
+      #Main_road_Cafe #2
+      - index: 3
+        groups: [A2]  
+        priority: true
+      #Main_left_Cafe #1
+      - index: 4
+        groups: [A2LeftTurn]  
+        priority: true
+      #Main_left_Cafe #2
+      - index: 4
+        groups: [A2LeftTurn]  
+        priority: true
+      #Restaurant #1
+      - index: 5
+        groups: [B1]  
+        priority: true
+      #Restaurant #2
+      - index: 5
+        groups: [B1]  
+        priority: true
+      #Restaurant left #1
+      - index: 5
+        groups: [B1LeftTurn]  
+        priority: true
+      #Restaurant left #2
+      - index: 5
+        groups: [B1LeftTurn]  
+        priority: true
+      #Main_road_Hotel #1
+      - index: 6
+        groups: [A1]  
+        priority: true
+      #Main_road_Hotel #2
+      - index: 6
+        groups: [A1]  
+        priority: true
+      #Main_left_Hotel #1
+      - index: 7
+        groups: [A1LeftTurn]  
+        priority: true
+      #Main_left_Hotel #2
+      - index: 7
+        groups: [A1LeftTurn]  
+        priority: true
+      # - index: 12
+      #   groups: [A2]  
+      #   priority: false
+      # - index: 13
+      #   groups: [bf]  
+      #   priority: true
+      # - index: 14
+      #   groups: [ag]  
+      #   priority: true
+      # - index: 15
+      #   groups: [bg]
+      #   priority: true
+      # - index: 16
+      #   groups: [af]
+      #   priority: true
+    groups: [A1, A1LeftTurn, A2, A2LeftTurn, B1, B1LeftTurn, B2, B2LeftTurn]
+    allowed_green_signal_combinations:
+      - signal: [A1]
+        allowed: [A1LeftTurn, A2]
+      - signal: [A1LeftTurn]
+        allowed: [A1, A2LeftTurn]
+      - signal: [A2]
+        allowed: [A2LeftTurn, A1]
+      - signal: [A2LeftTurn]
+        allowed: [A2, A1LeftTurn]
+      - signal: [B1]
+        allowed: [B1LeftTurn, B2]
+      - signal: [B1LeftTurn]
+        allowed: [B1, B2LeftTurn]
+      - signal: [B2]
+        allowed: [B2LeftTurn, B1]
+      - signal: [B2LeftTurn]
+        allowed: [B2, B1LeftTurn]
+    red_green_only: []
+    junction: cluster_248566141_248566148_5718595916_6196128282
+    swarco_port: 2000
+    amber_time: 3
+    red_amber_time: 0
