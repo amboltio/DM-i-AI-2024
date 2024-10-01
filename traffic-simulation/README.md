@@ -45,7 +45,6 @@ Total number of lanes for leg B2: 5
 **Lanes for Leg A1**
 - **1 x Left**: Allows for left turns only
 - **2 x Main**: Allows for straight traffic only
-(*Right-turn lane appears before the intersection, which is not shown in the image.*)
 
 Total number of lanes for leg A1: 3
 
