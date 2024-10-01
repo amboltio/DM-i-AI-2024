@@ -38,7 +38,7 @@ $$
 Score : \max \left(0,\frac{MAE_{baseline}-MAE}{MAE_{baseline}-MAE_{best}}\right)
 $$
 
-For this challenge, $MAE_{baseline}=5$. This corresponds to the approximate MAE-score achieved by running the baseline model provided in ```model.py```. This scaling means that you will get a scaled score of $0$ if you do worse than or as good as the baseline model, and a score of $1$ if you have the best model among all teams. 
+For this challenge, $MAE_{baseline}=6$. This corresponds to the approximate MAE-score achieved by running the baseline model provided in ```model.py```. This scaling means that you will get a scaled score of $0$ if you do worse than or as good as the baseline model, and a score of $1$ if you have the best model among all teams. 
 
 ## Quickstart
 Clone the repository and change folder to the ct-inpainting challenge
