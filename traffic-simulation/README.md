@@ -147,7 +147,7 @@ We impose a penalty for every car that has waited more than 90 seconds in total.
 The final score that you see in the leaderboard is normalized in the interval between 0 to 1 by:
 
 $$
-\text{final score} = \frac{1}{\text{score}}
+\text{final score} : \max \left(0,\frac{score_{baseline}-score}{score_{baseline}-score_{best}}\right)
 $$
 
 ## Interaction
@@ -165,6 +165,8 @@ Every second of the simulation, you will receive a payload containing the follow
 During the week of the competition, you will be able to validate your solution against the validation set. You can do this multiple times, however, **you can only submit to the evaluation set once!** The best validation and evaluation score your model achieves will be displayed on the <a href="https://cases.dmiai.dk"> scoreboard</a> . We encourage you to validate your code and API before you submit your final model to evaluation. 
 
 Randomness: We use a random seed for running the validation endpoint. Thus, you will probably receive different scores even if your algorithm stays the same. This is to remind you to not overfit to the validation set. The random seed is fixed for the evaluation endpoint.
+
+The evaluation is performed on the two intersections from the validation endpoint, but with different traffic patterns.
 
 ## Quickstart
 
