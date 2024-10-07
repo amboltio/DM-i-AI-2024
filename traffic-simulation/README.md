@@ -27,7 +27,7 @@ Intersection with designated legs (Figure 2):
 A lane allows for a vehicle to cross the intersection in a certain manner. You may experience the following lane types in this use case:
 - **Right**: Allows for traffic to only turn right at the lane.
 - **Left**: Allows for traffic to only turn left at the lane.
-- **Main**: Allows for traffic to go straight, and potentially also turn left or right, if these turns aren’t assigned to other lanes on that leg.
+- **Main**: Allows for traffic to go straight, and potentially also turn left or right.
 
 (*Note: Not all directions are always available.*)
 
@@ -48,11 +48,10 @@ Total number of lanes for leg B2: 5
 
 Total number of lanes for leg A1: 3
 
-**Lanes for Leg X3 (not in Figure 2)**
+**Lanes for hypothetical leg not in Figure 2**
 - **1 x Right**: Allows for right turns only
 - **1 x Main**: Allows for traffic straight and left
 
-Total number of lanes for leg X3: 2
 
 ### Vehicles
 We observe the vehicles as they approach the intersection. You will receive a list of all approaching vehicles that are within 100 meters of the intersection with the following attributes:
